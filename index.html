@@ -172,6 +172,117 @@
         
 
 <div class="post">
+    <a href="/2023/12/22/Modern-C-move-forward/">
+        <h2 class="post-title">Modern C++: move &amp;&amp; forward</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="stdmove"><a class="markdownIt-Anchor" href="#stdmove"></a> std::move()</h1>
+<p>该函数将传入的参数变成将亡值（会清空该参数），同时返回该函数的右值，方便移动构造，实现所有权交接</p>
+<p>其本质并不是移动，而是强制类型转换，把参数强制转换成为右值</p>
+<p>ps. 函数返回局部对象时请不要 std::move ，你的编译器会自动做优化 (RVO) ，如果使用可能会破坏优化</p>
+<h1 id="stdforward"><a class="markdownIt-Anchor" href="#stdforward"></a> std::forward()</h1>
+<h2 id="problem"><a class="markdownIt-Anchor" href="#problem"></a> problem</h2>
+<p>在使用万能引用时，由于不清楚最终参数会被匹配为什么引用，而 C++ 中，所有引用都是左值，当外部传入一个右值时，在模板内部的参数是右值引用，当在模板内部传入该引用，其会被认为是左值，从而匹配左值引用，所有需要 forward 进行转发</p>
+<h2 id="function"><a class="markdownIt-Anchor" href="#function"></a> function</h2>
+<p>std::forward()实现了完美转发（即正确调用函数），左值引用传左值引用的重载函数，右值引用传右值引用的重载函数</p>
+<p>其本质是<strong>有选择的类型转换</strong>，把右值引用转化为右值，左值引用则保持不变</p>
+<p>其原理其实是 T&amp;&amp; 中的 T 保存了传入时的参数状态：左值或者右值</p>
+<h2 id="difference"><a class="markdownIt-Anchor" href="#difference"></a> difference</h2>
+<p>std::forward() 有选择的右值转换</p>
+<p>std::move() 强制右值转换</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Modern-C/" style="color: #ffa2c4">Modern_C++</a>
+        </span>
+        
+    </div>
+    <a href="/2023/12/22/Modern-C-move-forward/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/12/22/Modern-C-Lvalue-Rvalue/">
+        <h2 class="post-title">Modern C++: Lvalue &amp;&amp; Rvalue</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="左值-右值-将亡值"><a class="markdownIt-Anchor" href="#左值-右值-将亡值"></a> 左值、右值、将亡值</h1>
+<h2 id="左值"><a class="markdownIt-Anchor" href="#左值"></a> 左值</h2>
+<p>左值（lvalue）是可以修改的值，是在可修改区域（堆、栈、全局）的值，是有名字的值</p>
+<p>ps. 所有的函数形参都是左值</p>
+<h2 id="右值"><a class="markdownIt-Anchor" href="#右值"></a> 右值</h2>
+<p>右值（rvalue）是不可以修改的值，是在不可修改区域（代码区）的值，是无名的值</p>
+<h2 id="将亡值"><a class="markdownIt-Anchor" href="#将亡值"></a> 将亡值</h2>
+<p>将亡值（xvalue）是生命周期很短，即将释放的值</p>
+<h1 id="三种引用"><a class="markdownIt-Anchor" href="#三种引用"></a> 三种引用</h1>
+<p>引用本质是对指针的封装，是C++对地址空间的保护</p>
+<h2 id="左值引用"><a class="markdownIt-Anchor" href="#左值引用"></a> 左值引用</h2>
+<p>左值引用是给地址空间起别名，是对地址的映射</p>
+<h2 id="右值引用"><a class="markdownIt-Anchor" href="#右值引用"></a> 右值引用</h2>
+<p>右值引用是将不可修改的右值拷贝一份放到可修改区域，并为该地址取得名，是该地址的映射，所以右值引用是左值</p>
+<p>当右值引用作为函数形参时，只能匹配右值，这通常用来实现移动语义</p>
+<h2 id="万能引用"><a class="markdownIt-Anchor" href="#万能引用"></a> 万能引用</h2>
+<p>万能引用是 C++ 模板编程中的特殊引用，其既可以匹配左值，又可以匹配右值，所以称为万能引用</p>
+<p>基于引用折叠，左值会匹配为左值引用，右值会匹配为右值引用</p>
+<p>在模板内部，当需要调用其他函数并且传入万能引用形参时，需要对万能引用调用forward进行完美转发</p>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        <span class="icon">
+            <i class="fa-solid fa-tags fa-fw"></i>
+        </span>
+        
+        
+        
+        <span class="tag">
+            
+            <a href="/tags/Modern-C/" style="color: #ffa2c4">Modern_C++</a>
+        </span>
+        
+    </div>
+    <a href="/2023/12/22/Modern-C-Lvalue-Rvalue/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/12/22/Newcoder-%E5%B0%8F%E7%99%BD%E6%9C%88%E8%B5%9B78/">
         <h2 class="post-title">Newcoder: 小白月赛78</h2>
     </a>
@@ -419,7 +530,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Codeforces/" style="color: #00a596">Codeforces</a>
+            <a href="/tags/Codeforces/" style="color: #00bcd4">Codeforces</a>
         </span>
         
     </div>
@@ -544,7 +655,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Codeforces/" style="color: #03a9f4">Codeforces</a>
+            <a href="/tags/Codeforces/" style="color: #ff7d73">Codeforces</a>
         </span>
         
     </div>
@@ -710,7 +821,7 @@
         
         <span class="tag">
             
-            <a href="/tags/Codeforces/" style="color: #ffa2c4">Codeforces</a>
+            <a href="/tags/Codeforces/" style="color: #00a596">Codeforces</a>
         </span>
         
     </div>
