@@ -1,0 +1,290 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title> | Ccool_tea的Bug随笔</title>
+    <meta name="author" content="Ccool_tea" />
+    <meta name="description" content="Ccool_tea的个人博客" />
+    <meta name="keywords" content="Learning, Debug" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://cdn.staticfile.org" />
+<script src="https://cdn.staticfile.org/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.staticfile.org/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>CCOOL_TEA的BUG随笔</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;CCOOL_TEA的BUG随笔</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1></h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/D">https://codeforces.com/contest/1878/problem/D</a></p>
+</blockquote>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>这道题最大的难点在于把$l$与$r$数组的特殊性，以及$a$和$b$操作的特殊性弄清楚  </p>
+<h3 id="l-r"><a href="#l-r" class="headerlink" title="$l$ &amp; $r$"></a>$l$ &amp; $r$</h3><p>题目说给一个x夹在某个$l$与$r$中间，意思就是$l$与$r$是区间$[l,r]$的集合，而且这个集合拥有以下的特性：  </p>
+<ul>
+<li>$l_1$对应字符串开头</li>
+<li>$r_n$对应字符串结尾</li>
+<li>两个区间是紧挨着的（$l_{k+1}&#x3D;r_k+1$）</li>
+</ul>
+<p>所以可见这个集合覆盖了整个字符串，而且<strong>两两之间不重合</strong></p>
+<h3 id="a-b"><a href="#a-b" class="headerlink" title="$a$ &amp; $b$"></a>$a$ &amp; $b$</h3><p>题面给的$a$和$b$经过观察样例可以发现，$a$和$b$在某个区间内是<strong>左右对称的</strong></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>所以我们可以采取用数组记录操作的位置，然后在输出的时候根据记录来决定移动的方向和读取的顺序<br>数组如此记录$arr[a]&#x3D;b, arr[b]&#x3D;a$<br>读取如下：  </p>
+<ul>
+<li>如果$arr[i]&#x3D;-1$，则输出</li>
+<li>否则跳转至$arr[i]$的位置，按相反方向输出</li>
+<li>途中如果遇见$arr[i]$有值的情况，则跳转然后反向输出</li>
+<li>直到输出到跳转起始位置</li>
+</ul>
+<h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h2 id="Description-1"><a href="#Description-1" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/E">https://codeforces.com/contest/1878/problem/E</a></p>
+</blockquote>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h2><p>本题的关键在于如何快速的求出$f(l,r)$，以及如何快速地找到$r$</p>
+<h3 id="Calculate-f-l-r"><a href="#Calculate-f-l-r" class="headerlink" title="Calculate $f(l, r)$"></a>Calculate $f(l, r)$</h3><p>$$f(l, r)&#x3D;a_l \And a_{l+1} \And … \And a_r$$<br>由&amp;的性质，一旦$a_i$的某一位为0，则之后的操作过后，该位还是0<br>我们记录一个二维数组$arr[i][j]$表示直到第$i$个数（包括），第$j$位0的总数，所以对于$f(l, r)$，我们只需要知道$a_l$和$arr[l][j], arr[r][j]$的值就可以快速算出<br>（$arr[l][j] \neq arr[r][j]$表示&amp;后的第$j$位是0）</p>
+<h3 id="Find-r"><a href="#Find-r" class="headerlink" title="Find $r$"></a>Find $r$</h3><p>由于&amp;的性质，$a \geq a \And b$，所以可以认为在$l$固定的情况下，$f(l, r)$关于r递减，可以看作是一个降序的数组<br>降序的数组怎么查最快？当然是二分查找！</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>所以我们在读取数据后生成对应的$arr$，然后按照以上方法进行计算即可</p>
+<h1 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h1><h2 id="Main-Structure"><a href="#Main-Structure" class="headerlink" title="Main Structure"></a>Main Structure</h2><p>二分查找一定有$l$和$r$，然后根据条件不断二分</p>
+<pre><code class="C++">int l = begin, r = end;
+while (l &lt; r) &#123;
+    int mid = (l + r) / 2;
+    if (condition) statement1;
+    else statement2;
+&#125;
+</code></pre>
+<h2 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h2><p>根据情况不同，判断的条件也不同<br>这里假设$arr$是升序的<br>一共有两类情况：  </p>
+<ol>
+<li>查找大于（等于）$k$的最左的位置</li>
+<li>查找小于（等于）$k$的最右的位置</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">Index</th>
+<th align="left">Condition</th>
+<th align="left">Statement1</th>
+<th align="left">Statement2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left"><code>arr[mid] &gt;(=) k</code></td>
+<td align="left"><code>r = mid</code></td>
+<td align="left"><code>l = mid + 1</code></td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"><code>arr[mid] &lt;(=) k</code></td>
+<td align="left"><code>l = mid</code></td>
+<td align="left"><code>r = mid - 1</code></td>
+</tr>
+</tbody></table>
+<p>这里1、2的表述其实是一样的，因为查到了1，往左一位就是2的答案<br>而在实际中，应该尽量使用1而不是2，尽量避免<code>l = mid, r = mid - 1</code>这种情况出现，因为当$r-l&#x3D;1$的时候，$mid&#x3D;l$，这就会导致$l&#x3D;mid$不断执行而不会结束循环，而1的写法就能避免这一点  </p>
+<p>还需要注意的一点，当将2的情况变为1的写法时，一定要注意边界结果，因为我们返回答案时会返回$l-1$，所以当答案是$size-1$时，会返回$size-2$</p>
+<h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h2 id="Description-2"><a href="#Description-2" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/F">https://codeforces.com/contest/1878/problem/F</a></p>
+</blockquote>
+<h2 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h2><p>这一道就是纯粹的数论题了<br>当$\gcd(a,n)&#x3D;1$时，$d(a \times n)&#x3D;d(a)d(n)$，这可以由数的质因数分解来证明，证明如下：<br>$$设n&#x3D;p_1^{\alpha_1}p_2^{\alpha_2}\cdots p_r^{\alpha_r}, a&#x3D;q_1^{\beta_1}\cdots q_s^{\beta_s},其中p_i,q_i都是素数$$<br>$$\because \gcd(a,n)&#x3D;1$$<br>$$\therefore p_i \neq q_j$$<br>$$由定义可知: d(n)&#x3D;\prod_{i&#x3D;1}^r(\alpha_i+1)$$<br>$$\therefore d(a\times n)&#x3D;(\alpha_1+1)(\alpha_2+1)\cdots(\alpha_r+1)(\beta_1+1)\cdots(\beta_s+1)&#x3D;\prod_{i&#x3D;1}^r(\alpha_i+1)\prod_{i&#x3D;1}^s(\beta_i+1)&#x3D;d(n)d(a)$$<br>所以要满足$d(an)&#x3D;d(n)d(a)&#x3D;n$需要保证n是1或2或合数<br>如果n为1，则显然a为1可以满足<br>如果n为2，则a为1仍然可以满足<br>如果n是合数，则n还需要满足$d(n)|n$这个性质<br>那a呢？事实上，a可以取不是n的因数的素数，保证$\gcd(a,n)&#x3D;1$，同时令$d(a)&#x3D;\frac{n}{d(n)}$，可以得出$a&#x3D;p^{\frac{n}{d(n)}-1}$<br>于是我们得到判据：  </p>
+<ul>
+<li>如果n为非2的素数，则不满足</li>
+<li>如果n为合数而且$d(n)\nmid n$，则不满足</li>
+<li>其他情况都满足</li>
+</ul>
+<h2 id="Details-1"><a href="#Details-1" class="headerlink" title="Details"></a>Details</h2><p>注意本题数据范围，$n\times x$会很大，甚至会爆<code>unsigned long long</code>，所以要用质因数分解的形式储存和计算</p>
+<h1 id="G"><a href="#G" class="headerlink" title="G"></a>G</h1><h2 id="Description-3"><a href="#Description-3" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/G">https://codeforces.com/contest/1878/problem/G</a></p>
+</blockquote>
+<h2 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h2>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Ccool_tea的Bug随笔
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Ccool_tea
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>

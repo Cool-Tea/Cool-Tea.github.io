@@ -167,6 +167,276 @@
         
 
 <div class="post">
+    <a href="/2023/12/22/R900div.3/">
+        <h2 class="post-title"></h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/D">https://codeforces.com/contest/1878/problem/D</a></p>
+</blockquote>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>这道题最大的难点在于把$l$与$r$数组的特殊性，以及$a$和$b$操作的特殊性弄清楚  </p>
+<h3 id="l-r"><a href="#l-r" class="headerlink" title="$l$ &amp; $r$"></a>$l$ &amp; $r$</h3><p>题目说给一个x夹在某个$l$与$r$中间，意思就是$l$与$r$是区间$[l,r]$的集合，而且这个集合拥有以下的特性：  </p>
+<ul>
+<li>$l_1$对应字符串开头</li>
+<li>$r_n$对应字符串结尾</li>
+<li>两个区间是紧挨着的（$l_{k+1}&#x3D;r_k+1$）</li>
+</ul>
+<p>所以可见这个集合覆盖了整个字符串，而且<strong>两两之间不重合</strong></p>
+<h3 id="a-b"><a href="#a-b" class="headerlink" title="$a$ &amp; $b$"></a>$a$ &amp; $b$</h3><p>题面给的$a$和$b$经过观察样例可以发现，$a$和$b$在某个区间内是<strong>左右对称的</strong></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>所以我们可以采取用数组记录操作的位置，然后在输出的时候根据记录来决定移动的方向和读取的顺序<br>数组如此记录$arr[a]&#x3D;b, arr[b]&#x3D;a$<br>读取如下：  </p>
+<ul>
+<li>如果$arr[i]&#x3D;-1$，则输出</li>
+<li>否则跳转至$arr[i]$的位置，按相反方向输出</li>
+<li>途中如果遇见$arr[i]$有值的情况，则跳转然后反向输出</li>
+<li>直到输出到跳转起始位置</li>
+</ul>
+<h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h2 id="Description-1"><a href="#Description-1" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/E">https://codeforces.com/contest/1878/problem/E</a></p>
+</blockquote>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h2><p>本题的关键在于如何快速的求出$f(l,r)$，以及如何快速地找到$r$</p>
+<h3 id="Calculate-f-l-r"><a href="#Calculate-f-l-r" class="headerlink" title="Calculate $f(l, r)$"></a>Calculate $f(l, r)$</h3><p>$$f(l, r)&#x3D;a_l \And a_{l+1} \And … \And a_r$$<br>由&amp;的性质，一旦$a_i$的某一位为0，则之后的操作过后，该位还是0<br>我们记录一个二维数组$arr[i][j]$表示直到第$i$个数（包括），第$j$位0的总数，所以对于$f(l, r)$，我们只需要知道$a_l$和$arr[l][j], arr[r][j]$的值就可以快速算出<br>（$arr[l][j] \neq arr[r][j]$表示&amp;后的第$j$位是0）</p>
+<h3 id="Find-r"><a href="#Find-r" class="headerlink" title="Find $r$"></a>Find $r$</h3><p>由于&amp;的性质，$a \geq a \And b$，所以可以认为在$l$固定的情况下，$f(l, r)$关于r递减，可以看作是一个降序的数组<br>降序的数组怎么查最快？当然是二分查找！</p>
+<h3 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h3><p>所以我们在读取数据后生成对应的$arr$，然后按照以上方法进行计算即可</p>
+<h1 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h1><h2 id="Main-Structure"><a href="#Main-Structure" class="headerlink" title="Main Structure"></a>Main Structure</h2><p>二分查找一定有$l$和$r$，然后根据条件不断二分</p>
+<pre><code class="C++">int l = begin, r = end;
+while (l &lt; r) &#123;
+    int mid = (l + r) / 2;
+    if (condition) statement1;
+    else statement2;
+&#125;
+</code></pre>
+<h2 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h2><p>根据情况不同，判断的条件也不同<br>这里假设$arr$是升序的<br>一共有两类情况：  </p>
+<ol>
+<li>查找大于（等于）$k$的最左的位置</li>
+<li>查找小于（等于）$k$的最右的位置</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th align="left">Index</th>
+<th align="left">Condition</th>
+<th align="left">Statement1</th>
+<th align="left">Statement2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left"><code>arr[mid] &gt;(=) k</code></td>
+<td align="left"><code>r = mid</code></td>
+<td align="left"><code>l = mid + 1</code></td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left"><code>arr[mid] &lt;(=) k</code></td>
+<td align="left"><code>l = mid</code></td>
+<td align="left"><code>r = mid - 1</code></td>
+</tr>
+</tbody></table>
+<p>这里1、2的表述其实是一样的，因为查到了1，往左一位就是2的答案<br>而在实际中，应该尽量使用1而不是2，尽量避免<code>l = mid, r = mid - 1</code>这种情况出现，因为当$r-l&#x3D;1$的时候，$mid&#x3D;l$，这就会导致$l&#x3D;mid$不断执行而不会结束循环，而1的写法就能避免这一点  </p>
+<p>还需要注意的一点，当将2的情况变为1的写法时，一定要注意边界结果，因为我们返回答案时会返回$l-1$，所以当答案是$size-1$时，会返回$size-2$</p>
+<h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h2 id="Description-2"><a href="#Description-2" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/F">https://codeforces.com/contest/1878/problem/F</a></p>
+</blockquote>
+<h2 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h2><p>这一道就是纯粹的数论题了<br>当$\gcd(a,n)&#x3D;1$时，$d(a \times n)&#x3D;d(a)d(n)$，这可以由数的质因数分解来证明，证明如下：<br>$$设n&#x3D;p_1^{\alpha_1}p_2^{\alpha_2}\cdots p_r^{\alpha_r}, a&#x3D;q_1^{\beta_1}\cdots q_s^{\beta_s},其中p_i,q_i都是素数$$<br>$$\because \gcd(a,n)&#x3D;1$$<br>$$\therefore p_i \neq q_j$$<br>$$由定义可知: d(n)&#x3D;\prod_{i&#x3D;1}^r(\alpha_i+1)$$<br>$$\therefore d(a\times n)&#x3D;(\alpha_1+1)(\alpha_2+1)\cdots(\alpha_r+1)(\beta_1+1)\cdots(\beta_s+1)&#x3D;\prod_{i&#x3D;1}^r(\alpha_i+1)\prod_{i&#x3D;1}^s(\beta_i+1)&#x3D;d(n)d(a)$$<br>所以要满足$d(an)&#x3D;d(n)d(a)&#x3D;n$需要保证n是1或2或合数<br>如果n为1，则显然a为1可以满足<br>如果n为2，则a为1仍然可以满足<br>如果n是合数，则n还需要满足$d(n)|n$这个性质<br>那a呢？事实上，a可以取不是n的因数的素数，保证$\gcd(a,n)&#x3D;1$，同时令$d(a)&#x3D;\frac{n}{d(n)}$，可以得出$a&#x3D;p^{\frac{n}{d(n)}-1}$<br>于是我们得到判据：  </p>
+<ul>
+<li>如果n为非2的素数，则不满足</li>
+<li>如果n为合数而且$d(n)\nmid n$，则不满足</li>
+<li>其他情况都满足</li>
+</ul>
+<h2 id="Details-1"><a href="#Details-1" class="headerlink" title="Details"></a>Details</h2><p>注意本题数据范围，$n\times x$会很大，甚至会爆<code>unsigned long long</code>，所以要用质因数分解的形式储存和计算</p>
+<h1 id="G"><a href="#G" class="headerlink" title="G"></a>G</h1><h2 id="Description-3"><a href="#Description-3" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1878/problem/G">https://codeforces.com/contest/1878/problem/G</a></p>
+</blockquote>
+<h2 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h2>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2023/12/22/R900div.3/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/12/22/R905div3/">
+        <h2 class="post-title"></h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1883/problem/D">https://codeforces.com/contest/1883/problem/D</a></p>
+</blockquote>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><p>题意让我们找到两个不重叠的子区间，所以本题的关键就在于如何快速判断有没有重叠的子区间<br>现在我们思考，两个区间不重叠的条件是什么？<br>即区间边界是分离的，<strong>左区间的右边界小于等于右区间的左边界</strong><br>而题目要求只要找到一对，那我们可以取极端情况：<br>右边界最靠左的区间和左边界最靠右的区间，如果这两个区间不重叠，则满足题意，否则，没有其他区间不重叠（可以反证证明）  </p>
+<h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h2 id="Description-1"><a href="#Description-1" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1883/problem/E">https://codeforces.com/contest/1883/problem/E</a></p>
+</blockquote>
+<h2 id="Solution-1"><a href="#Solution-1" class="headerlink" title="Solution"></a>Solution</h2><p>题意要求通过乘2操作使原数列变为非减数列<br>假设经过操作后的第$i$位变为$2^{\alpha}a_i$，第$i+1$位变为$2^{\beta}a_{i+1}$，则应该满足<br>$$2^{\alpha}a^i \leq 2^{\beta}a_{i+1}$$<br>$$\beta \geq \log_2(\frac{2^{\alpha}a^i}{a_{i+1}})$$<br>通过向上取整可以得到每一位的最小操作数</p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>本题会爆unsigned long long，所以要单独存储2的指数</li>
+<li>本题要注意log的运算优化，防止精度损失</li>
+</ol>
+<h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h2 id="Description-2"><a href="#Description-2" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1883/problem/F">https://codeforces.com/contest/1883/problem/F</a></p>
+</blockquote>
+<h2 id="Solution-2"><a href="#Solution-2" class="headerlink" title="Solution"></a>Solution</h2><p>题意要求找到不重复的子列的数量，但是<strong>不要求子列是连续的</strong><br>本题关键在于如何找到不重复的子列，同D，两个子列不重复的条件是什么？不好判断，所以我们想两个子列重复的条件是什么？<br><strong>两个子列的左右边界上的数相等</strong><br>但是这是一个必要条件，我们如何补充条件使其充分？<br>如果子列的左边界左边没有左边界上的数，右边界右边没有右边界上的数，则该子列一定是不重复的<br>可以证明，这样取子列可以取完所有符合条件的子列<br>假设对于子列$[l,r], \exist \alpha \in [0, l],\beta \in [r,n-1],a[\alpha]&#x3D;a[l],a[\beta]&#x3D;a[r]$，则我们可以取出$[l+1,r]$和$[l,r-1]$的子列组成两个同样子列，矛盾！<br>所以我们有了一个贪心策略</p>
+<ul>
+<li>首先生成两个数列，分别记录该位置上的数是否是第一次出现和最后一次出现</li>
+<li>然后对第一次出现的数列求前缀和</li>
+<li>遍历每一个最后一次出现的数，将其对应的前缀和相加</li>
+</ul>
+<h1 id="G"><a href="#G" class="headerlink" title="G"></a>G</h1><h2 id="Description-3"><a href="#Description-3" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1883/problem/G1">https://codeforces.com/contest/1883/problem/G1</a><br><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1883/problem/G2">https://codeforces.com/contest/1883/problem/G2</a></p>
+</blockquote>
+<h2 id="Solution-3"><a href="#Solution-3" class="headerlink" title="Solution"></a>Solution</h2><p>本题分为两个难度，后一个是前一个的深化  </p>
+<h3 id="G1"><a href="#G1" class="headerlink" title="G1"></a>G1</h3><p>解题的关键就在于数列排序的任意性，既然排序是任意的，不妨将两个数列排序后再进行操作<br>由于我们想尽可能减少移除的元素个数，所以我们应该建立尽可能多的映射$a[i] \lrArr b[j], a[i] &lt; b[j]$，由此我们有了一个贪心策略：</p>
+<ul>
+<li>对于每一个$a[i]$，向后遍历$b[j]$直到找到严格大于$a[i]$的$b[j]$</li>
+<li>找到数组结尾就结束</li>
+</ul>
+<p>直观上看，因为$b[j]$越往后越大，跟田忌赛马一样，应该能对应更多的$a[i]$，于是我们有了G1的双指针+贪心的做法：</p>
+<ul>
+<li>两个指针分别指向$a[0]$和$b[0]$</li>
+<li>如果$b[j]$不是严格大于$a[i]$，就让$b$指针向后移动直到找到严格大于的数</li>
+<li>如果满足映射关系，则两个指针同时自增</li>
+</ul>
+<h3 id="G2"><a href="#G2" class="headerlink" title="G2"></a>G2</h3><p>接下来的题目在$a[0]$从1到m的条件下求G1，并且输出所有答案的和<br>如何减少时间复杂度呢？这依赖于一个需要观察的性质<br>假设$f(x)$表示$a[0] &#x3D; x$的条件下的解，则<br>$$\exist k, s.t. f(1)&#x3D;f(2)&#x3D;\cdots&#x3D;f(k)&#x3D;f(k+1)-1&#x3D;\cdots&#x3D;f(\infty)-1$$<br>可以由归纳法证明：<br>因为变化的只有$a[0]$，所以不考虑$a[0]$，在$a[i],i \geq 1$与$b[j]$建立起映射，<strong>因为排序是任意的</strong>，取剩下的$b[j]$的最大值$M$，如果$a[0]&lt;M$，则建立起映射，$f(a[0])$就不变；反之，则$f(a[0])$必须要多删一个<br><strong>可知$k$就是剩下$b[j]$中最大值的下标</strong><br>所以我们可以只用求一次G1，然后通过找出$k$，经过判断和简单的四则运算就可以输出答案，大大降低了时间复杂度</p>
+<h2 id="Note-1"><a href="#Note-1" class="headerlink" title="Note"></a>Note</h2><ol>
+<li>G2会爆int</li>
+<li>因为不管$a[0]$，所以要在排序后给它赋值</li>
+<li>不要用iterator，会有莫名其妙的Access Violation</li>
+<li><code>any element</code>是任意<strong>一个</strong>元素，不是任选元素</li>
+</ol>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2023/12/22/R905div3/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
+    <a href="/2023/12/22/R898div.4/">
+        <h2 class="post-title"></h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h2 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/E">https://codeforces.com/contest/1873/problem/E</a></p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>首先最原始的思路就是从$h&#x3D;1$开始，不断累加，然后判断容量是否比$x$大，直到找到$w_h&lt;x&lt;w_{h+1}$，当然，当数据加强的时候，一定会TLE<br>比这个更优的是利用二分法加速，因为我们发现改变数组的顺序不影响结果，那我们用任意一个排序，使数组升序，方便二分，但是当$h&gt;\max{a_h}$时，我们必须单独判断，除此之外，因为有可能$h$夹在$a_h$中间，所以二分必须是先找$a_h$和$a_{h+1}$，然后再计算高度<br>综上，步骤为：  </p>
+<ul>
+<li>读取数据和排序</li>
+<li>判断是否$h&gt;\max{a_h}$，如果是，就直接输出结果</li>
+<li>如果不是，则开始二分查找$a_h&lt;x&lt;a_{h+1}$，一旦中间出现等于，立即返回</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>由于计算容量的时候要经历$\log(N)$的操作，不妨记录一个前缀和presum，则计算容量只需要<br>$$V_{water}&#x3D;(i+1) \times height[i]-presum[i]$$<br>每次只需要查表即可</li>
+<li>二分的时候一定要设置$left$和$right$，这是二分的必须条件</li>
+</ol>
+<h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h2 id="题面-1"><a href="#题面-1" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/F">https://codeforces.com/contest/1873/problem/F</a></p>
+</blockquote>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>这道题是一道经典的尺取法的问题，我们要考虑的问题有两个：<br>如何取得连续整除的子列？<br>如何保证子列的和不超过$k$?<br>既然是尺取法，则需要双指针，那一开始指针就必须指向一个$a_i&lt;k$的数<br>按题意，首先必须满足$h_{i}|h_{i-1}$，然后判断加上$a_i$会不会超$k$，没有就记录长度，超了就让前面的一端向后移动直到不超位置<br>如果不满足$h_{i}|h_{i-1}$，则让前端从后端开始寻找下一个$a_i&lt;k$，重置初始条件，重复以上过程<br>综上，步骤为：</p>
+<ul>
+<li>循环找到启示指针位置</li>
+<li>开始移动指针，判断$h_{i}|h_{i-1}$</li>
+<li><ul>
+<li>满足，判断加上$a_i$超不超，超了就移动前指针找到不超的$a_i$；最后记录最长长度</li>
+</ul>
+</li>
+<li><ul>
+<li>不满足，前指针到后指针处，循环找到合适位置，重置和与后指针</li>
+</ul>
+</li>
+</ul>
+<h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><p>在寻找合适位置的时候要保证前指针小于后指针，如果发现一直找不到合适位置，直接返回已有长度</p>
+<h2 id="G"><a href="#G" class="headerlink" title="G"></a>G</h2><h2 id="题面-2"><a href="#题面-2" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/G">https://codeforces.com/contest/1873/problem/G</a></p>
+</blockquote>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>这道题是一道动态规划的题<br>由题意可以知道，B是一个关键的结算节点，B前面或者是后面的A的数量决定着这个B可以进行的操作次数，那不妨使用一个数组记录每个B前后的A的数量<br><strong>状态设置</strong><br>假设$dp[i][j],(j \in {0, 1})$表示直到第$i$个B选择$j$状态的累计最大操作数，0表示选择前面，1表示选择后面<br>初始状态为<br>$$dp[0][0]&#x3D;B[0][0], dp[0][1]&#x3D;B[0][1]$$<br><strong>状态转移</strong><br>$$dp[i][0]&#x3D;\max{dp[i-1][0]+B[i][0],dp[i-1][1]}$$<br>$$dp[i][1]&#x3D;\max{dp[i-1][0]+B[i][1],dp[i-1][1]+B[i][1]}$$<br>最后取$dp$中最大值即可</p>
+<h1 id="H"><a href="#H" class="headerlink" title="H"></a>H</h1><h2 id="题面-3"><a href="#题面-3" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/H">https://codeforces.com/contest/1873/problem/H</a></p>
+</blockquote>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>本题面临以下几个问题：</p>
+<h3 id="怎样判断能否一直逃脱"><a href="#怎样判断能否一直逃脱" class="headerlink" title="怎样判断能否一直逃脱"></a>怎样判断能否一直逃脱</h3><p>根据题意，n个节点却只有n条边，所以图中只能且必须有一个环。<br>只有当b能到达环，且a不能在b到达环之前抓住b，b才能逃脱<br>这衍生出了几个问题：</p>
+<ol>
+<li>如何找出环</li>
+<li>如何判断b到环的距离</li>
+<li>如何判断a能否在b到环上前抓住b</li>
+</ol>
+<h3 id="如何找出环"><a href="#如何找出环" class="headerlink" title="如何找出环"></a>如何找出环</h3><ul>
+<li><strong>利用并查集</strong>，在读取边的时候，如果发现两个顶点已经在同一个集合内了，则说明它们一定是环上的两个点  </li>
+<li>从这环上的两个点其中之一出发，深度优先搜索dfs另一个点</li>
+<li>搜索到终点后，<strong>做一个全局标记，让函数返回上一层时记录下对应的点</strong>，得到所有环上的点</li>
+<li>最后将两个点连起来</li>
+</ul>
+<h3 id="如何判断b到环的距离"><a href="#如何判断b到环的距离" class="headerlink" title="如何判断b到环的距离"></a>如何判断b到环的距离</h3><ul>
+<li>利用两个数组，一个表示b到图中任意一点的距离，另一个表示节点是否访问过</li>
+<li>从b出发，广度优先搜索bfs，记录下沿途每一个点的距离，标记访问</li>
+<li>如果搜索到环上的点，记录距离和<strong>该点的编号（不妨设为c）</strong>，停止；</li>
+</ul>
+<h3 id="如何判断a能在b到环上前抓住b"><a href="#如何判断a能在b到环上前抓住b" class="headerlink" title="如何判断a能在b到环上前抓住b"></a>如何判断a能在b到环上前抓住b</h3><p>只要a到c的距离小于等于b，则a一定能抓住b，则同上：</p>
+<ul>
+<li>还是两个数组</li>
+<li>从a出发，bfs，记录距离和标记访问</li>
+<li>直到搜索到c</li>
+</ul>
+
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2023/12/22/R898div.4/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2023/12/22/How-to-maintain-a-good-project-file-structure/">
         <h2 class="post-title">How to maintain a good project file structure</h2>
     </a>

@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title> | Ccool_tea的Bug随笔</title>
+    <meta name="author" content="Ccool_tea" />
+    <meta name="description" content="Ccool_tea的个人博客" />
+    <meta name="keywords" content="Learning, Debug" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <link rel="icon" href="/images/avatar.jpg" />
+    <link rel="preconnect" href="https://cdn.staticfile.org" />
+<script src="https://cdn.staticfile.org/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.loli.net" />
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin />
+<link rel="stylesheet" href="https://fonts.loli.net/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" />
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://cdn.staticfile.org/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdn.staticfile.org/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://cdn.staticfile.org/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>CCOOL_TEA的BUG随笔</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;CCOOL_TEA的BUG随笔</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1></h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2023/12/22
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h2 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/E">https://codeforces.com/contest/1873/problem/E</a></p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>首先最原始的思路就是从$h&#x3D;1$开始，不断累加，然后判断容量是否比$x$大，直到找到$w_h&lt;x&lt;w_{h+1}$，当然，当数据加强的时候，一定会TLE<br>比这个更优的是利用二分法加速，因为我们发现改变数组的顺序不影响结果，那我们用任意一个排序，使数组升序，方便二分，但是当$h&gt;\max{a_h}$时，我们必须单独判断，除此之外，因为有可能$h$夹在$a_h$中间，所以二分必须是先找$a_h$和$a_{h+1}$，然后再计算高度<br>综上，步骤为：  </p>
+<ul>
+<li>读取数据和排序</li>
+<li>判断是否$h&gt;\max{a_h}$，如果是，就直接输出结果</li>
+<li>如果不是，则开始二分查找$a_h&lt;x&lt;a_{h+1}$，一旦中间出现等于，立即返回</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>由于计算容量的时候要经历$\log(N)$的操作，不妨记录一个前缀和presum，则计算容量只需要<br>$$V_{water}&#x3D;(i+1) \times height[i]-presum[i]$$<br>每次只需要查表即可</li>
+<li>二分的时候一定要设置$left$和$right$，这是二分的必须条件</li>
+</ol>
+<h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h2 id="题面-1"><a href="#题面-1" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/F">https://codeforces.com/contest/1873/problem/F</a></p>
+</blockquote>
+<h2 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h2><p>这道题是一道经典的尺取法的问题，我们要考虑的问题有两个：<br>如何取得连续整除的子列？<br>如何保证子列的和不超过$k$?<br>既然是尺取法，则需要双指针，那一开始指针就必须指向一个$a_i&lt;k$的数<br>按题意，首先必须满足$h_{i}|h_{i-1}$，然后判断加上$a_i$会不会超$k$，没有就记录长度，超了就让前面的一端向后移动直到不超位置<br>如果不满足$h_{i}|h_{i-1}$，则让前端从后端开始寻找下一个$a_i&lt;k$，重置初始条件，重复以上过程<br>综上，步骤为：</p>
+<ul>
+<li>循环找到启示指针位置</li>
+<li>开始移动指针，判断$h_{i}|h_{i-1}$</li>
+<li><ul>
+<li>满足，判断加上$a_i$超不超，超了就移动前指针找到不超的$a_i$；最后记录最长长度</li>
+</ul>
+</li>
+<li><ul>
+<li>不满足，前指针到后指针处，循环找到合适位置，重置和与后指针</li>
+</ul>
+</li>
+</ul>
+<h2 id="注意事项-1"><a href="#注意事项-1" class="headerlink" title="注意事项"></a>注意事项</h2><p>在寻找合适位置的时候要保证前指针小于后指针，如果发现一直找不到合适位置，直接返回已有长度</p>
+<h2 id="G"><a href="#G" class="headerlink" title="G"></a>G</h2><h2 id="题面-2"><a href="#题面-2" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/G">https://codeforces.com/contest/1873/problem/G</a></p>
+</blockquote>
+<h2 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h2><p>这道题是一道动态规划的题<br>由题意可以知道，B是一个关键的结算节点，B前面或者是后面的A的数量决定着这个B可以进行的操作次数，那不妨使用一个数组记录每个B前后的A的数量<br><strong>状态设置</strong><br>假设$dp[i][j],(j \in {0, 1})$表示直到第$i$个B选择$j$状态的累计最大操作数，0表示选择前面，1表示选择后面<br>初始状态为<br>$$dp[0][0]&#x3D;B[0][0], dp[0][1]&#x3D;B[0][1]$$<br><strong>状态转移</strong><br>$$dp[i][0]&#x3D;\max{dp[i-1][0]+B[i][0],dp[i-1][1]}$$<br>$$dp[i][1]&#x3D;\max{dp[i-1][0]+B[i][1],dp[i-1][1]+B[i][1]}$$<br>最后取$dp$中最大值即可</p>
+<h1 id="H"><a href="#H" class="headerlink" title="H"></a>H</h1><h2 id="题面-3"><a href="#题面-3" class="headerlink" title="题面"></a>题面</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1873/problem/H">https://codeforces.com/contest/1873/problem/H</a></p>
+</blockquote>
+<h2 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h2><p>本题面临以下几个问题：</p>
+<h3 id="怎样判断能否一直逃脱"><a href="#怎样判断能否一直逃脱" class="headerlink" title="怎样判断能否一直逃脱"></a>怎样判断能否一直逃脱</h3><p>根据题意，n个节点却只有n条边，所以图中只能且必须有一个环。<br>只有当b能到达环，且a不能在b到达环之前抓住b，b才能逃脱<br>这衍生出了几个问题：</p>
+<ol>
+<li>如何找出环</li>
+<li>如何判断b到环的距离</li>
+<li>如何判断a能否在b到环上前抓住b</li>
+</ol>
+<h3 id="如何找出环"><a href="#如何找出环" class="headerlink" title="如何找出环"></a>如何找出环</h3><ul>
+<li><strong>利用并查集</strong>，在读取边的时候，如果发现两个顶点已经在同一个集合内了，则说明它们一定是环上的两个点  </li>
+<li>从这环上的两个点其中之一出发，深度优先搜索dfs另一个点</li>
+<li>搜索到终点后，<strong>做一个全局标记，让函数返回上一层时记录下对应的点</strong>，得到所有环上的点</li>
+<li>最后将两个点连起来</li>
+</ul>
+<h3 id="如何判断b到环的距离"><a href="#如何判断b到环的距离" class="headerlink" title="如何判断b到环的距离"></a>如何判断b到环的距离</h3><ul>
+<li>利用两个数组，一个表示b到图中任意一点的距离，另一个表示节点是否访问过</li>
+<li>从b出发，广度优先搜索bfs，记录下沿途每一个点的距离，标记访问</li>
+<li>如果搜索到环上的点，记录距离和<strong>该点的编号（不妨设为c）</strong>，停止；</li>
+</ul>
+<h3 id="如何判断a能在b到环上前抓住b"><a href="#如何判断a能在b到环上前抓住b" class="headerlink" title="如何判断a能在b到环上前抓住b"></a>如何判断a能在b到环上前抓住b</h3><p>只要a到c的距离小于等于b，则a一定能抓住b，则同上：</p>
+<ul>
+<li>还是两个数组</li>
+<li>从a出发，bfs，记录距离和标记访问</li>
+<li>直到搜索到c</li>
+</ul>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2023 Ccool_tea的Bug随笔
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;Ccool_tea
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
