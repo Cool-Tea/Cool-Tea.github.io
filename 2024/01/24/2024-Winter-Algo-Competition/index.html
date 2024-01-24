@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>Hello World | Ccool_tea的Bug随笔</title>
+    <title>2024 Winter Algo Competition | Ccool_tea的Bug随笔</title>
     <meta name="author" content="Ccool_tea" />
     <meta name="description" content="" />
     <meta name="keywords" content="Learning, Debug" />
@@ -155,38 +155,62 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>Hello World</h1>
+        <h1>2024 Winter Algo Competition</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/12/22
+            2024/1/24
         </span>
         
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/Algo-Competition/" style="color: #ffa2c4">Algo Competition</a>
+            </span>
+            
+        </span>
         
     </div>
     
     <div class="content" v-pre>
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<pre class="highlight"><code class="bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span>
+        <h1 id="1-nanami-and-toys-buying-problem"><a class="markdownIt-Anchor" href="#1-nanami-and-toys-buying-problem"></a> 1. Nanami and Toys Buying Problem</h1>
+<h2 id="description"><a class="markdownIt-Anchor" href="#description"></a> Description</h2>
+<p>给定 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">n</span></span></span></span> 列，有无限行，第一行与第二行的物品价值用数组 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a, b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathnormal">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">b</span></span></span></span> 给出，第二行以下的物品价值与第二行相同，给定 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span> 次机会取走，每次取必须取每列最上面的物品，问最大可取价值是多少</p>
+<h2 id="solution"><a class="markdownIt-Anchor" href="#solution"></a> Solution</h2>
+<p>现在我们有几种策略，一是每次只拿表面价值最高的物品，二是找到第二行价值最大的物品，拿掉上面的，剩下全部拿该列的物品</p>
+<p>但是我们可以通过几个简单的例子证明这些策略是错误的：</p>
+<pre class="highlight"><code class="">(1) 共拿k次
+1 100 1000 10000
+10000000000 100 1000 1000
+(2) 共拿1次
+3 4 5
+10000 0 0
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<pre class="highlight"><code class="bash">$ hexo server
+<p>我们发现策略一没有考虑到第二行，导致不拿1下面的最大数；策略二没有考虑到第一行和k，如果次数有限则应该优先拿第一行最大的</p>
+<p>所以我们要想到一个考虑第一行与第二行，同时兼顾k的策略</p>
+<p>于是我们想，如果要获得最大的价值，我们应该考虑两个数组中的最大数，如果在第一行，则我们直接拿，如果在第二行，则我们要拿掉上面的才能拿到，此时还要考虑到k是否足够的问题，如果不够，则应该优先选第一行的次大数</p>
+<p>但是我们看下面的例子：</p>
+<pre class="highlight"><code class="">共拿3次
+0 1000 1001 1002
+1003 0 0 0
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<pre class="highlight"><code class="bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<pre class="highlight"><code class="bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>这个例子中，如果按照我们的策略，则我们会选择 0 1003 1003，而实际上应该选择 1002 1001 1000，这是没有考虑到上面的数对整体的影响</p>
+<p>那么我们换一种思路，我们能否通过暴力的方法解决呢</p>
+<p>我们假设最终用于累加的列为第i列，则我们可以通过二分查找的方法找第一行中比第二行第i列数大的所有数，判断取完这些数后是否还有次数，如果有就看这些数里面有没有第i列的第一行数，有就直接取第二行，没有就取完第一行再取第二行，然后计算价值，最后取这些价值中的最大值即为解</p>
+<p>而由于我们在查找过程中使用了二分，复杂度为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n\log{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathnormal">n</span></span><span class="mclose">)</span></span></span></span> ，是在可接受的范围内</p>
+<h2 id="details"><a class="markdownIt-Anchor" href="#details"></a> Details</h2>
+<ol>
+<li>本题需要特判最大值在第二行的情况，因为二分查找会查到第一行的最大值，但是最大值不取第一行最大值，而是直接取第二行的最大列</li>
+</ol>
 
     </div>
     
