@@ -174,7 +174,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Modern-C/" style="color: #ffa2c4">Modern_C++</a>
+                <a href="/tags/Modern-C/" style="color: #ff7d73">Modern_C++</a>
             </span>
             
         </span>
@@ -182,19 +182,14 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="stdmove"><a class="markdownIt-Anchor" href="#stdmove"></a> std::move()</h1>
-<p>该函数将传入的参数变成将亡值（会清空该参数），同时返回该函数的右值，方便移动构造，实现所有权交接</p>
+        <h1 id="std-move"><a href="#std-move" class="headerlink" title="std::move()"></a>std::move()</h1><p>该函数将传入的参数变成将亡值（会清空该参数），同时返回该函数的右值，方便移动构造，实现所有权交接</p>
 <p>其本质并不是移动，而是强制类型转换，把参数强制转换成为右值</p>
 <p>ps. 函数返回局部对象时请不要 std::move ，你的编译器会自动做优化 (RVO) ，如果使用可能会破坏优化</p>
-<h1 id="stdforward"><a class="markdownIt-Anchor" href="#stdforward"></a> std::forward()</h1>
-<h2 id="problem"><a class="markdownIt-Anchor" href="#problem"></a> problem</h2>
-<p>在使用万能引用时，由于不清楚最终参数会被匹配为什么引用，而 C++ 中，所有引用都是左值，当外部传入一个右值时，在模板内部的参数是右值引用，当在模板内部传入该引用，其会被认为是左值，从而匹配左值引用，所有需要 forward 进行转发</p>
-<h2 id="function"><a class="markdownIt-Anchor" href="#function"></a> function</h2>
-<p>std::forward()实现了完美转发（即正确调用函数），左值引用传左值引用的重载函数，右值引用传右值引用的重载函数</p>
+<h1 id="std-forward"><a href="#std-forward" class="headerlink" title="std::forward()"></a>std::forward()</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><p>在使用万能引用时，由于不清楚最终参数会被匹配为什么引用，而 C++ 中，所有引用都是左值，当外部传入一个右值时，在模板内部的参数是右值引用，当在模板内部传入该引用，其会被认为是左值，从而匹配左值引用，所有需要 forward 进行转发</p>
+<h2 id="function"><a href="#function" class="headerlink" title="function"></a>function</h2><p>std::forward()实现了完美转发（即正确调用函数），左值引用传左值引用的重载函数，右值引用传右值引用的重载函数</p>
 <p>其本质是<strong>有选择的类型转换</strong>，把右值引用转化为右值，左值引用则保持不变</p>
 <p>其原理其实是 T&amp;&amp; 中的 T 保存了传入时的参数状态：左值或者右值</p>
-<h2 id="difference"><a class="markdownIt-Anchor" href="#difference"></a> difference</h2>
-<p>std::forward() 有选择的右值转换</p>
+<h2 id="difference"><a href="#difference" class="headerlink" title="difference"></a>difference</h2><p>std::forward() 有选择的右值转换  </p>
 <p>std::move() 强制右值转换</p>
 
     </div>
