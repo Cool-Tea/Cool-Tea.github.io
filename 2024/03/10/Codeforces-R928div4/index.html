@@ -3,7 +3,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>Modern C++: Lvalue &amp;&amp; Rvalue | Ccool_tea的Bug随笔</title>
+    <title>Codeforces-R928div4 | Ccool_tea的Bug随笔</title>
     <meta name="author" content="Ccool_tea" />
     <meta name="description" content="" />
     <meta name="keywords" content="Learning, Debug" />
@@ -155,14 +155,14 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             <div class="article">
     <div>
-        <h1>Modern C++: Lvalue &amp;&amp; Rvalue</h1>
+        <h1>Codeforces-R928div4</h1>
     </div>
     <div class="info">
         <span class="date">
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2023/12/22
+            2024/3/10
         </span>
         
         
@@ -174,7 +174,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/Modern-C/" style="color: #ff7d73">Modern_C++</a>
+                <a href="/tags/Codeforces/" style="color: #00a596">Codeforces</a>
             </span>
             
         </span>
@@ -182,25 +182,32 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="左值-右值-将亡值"><a class="markdownIt-Anchor" href="#左值-右值-将亡值"></a> 左值、右值、将亡值</h1>
-<h2 id="左值"><a class="markdownIt-Anchor" href="#左值"></a> 左值</h2>
-<p>左值（lvalue）是可以修改的值，是在可修改区域（堆、栈、全局）的值，是有名字的值</p>
-<p>ps. 所有的函数形参都是左值</p>
-<h2 id="右值"><a class="markdownIt-Anchor" href="#右值"></a> 右值</h2>
-<p>右值（rvalue）是不可以修改的值，是在不可修改区域（代码区）的值，是无名的值</p>
-<h2 id="将亡值"><a class="markdownIt-Anchor" href="#将亡值"></a> 将亡值</h2>
-<p>将亡值（xvalue）是生命周期很短，即将释放的值</p>
-<h1 id="三种引用"><a class="markdownIt-Anchor" href="#三种引用"></a> 三种引用</h1>
-<p>引用本质是对指针的封装，是C++对地址空间的保护</p>
-<h2 id="左值引用"><a class="markdownIt-Anchor" href="#左值引用"></a> 左值引用</h2>
-<p>左值引用是给地址空间起别名，是对地址的映射</p>
-<h2 id="右值引用"><a class="markdownIt-Anchor" href="#右值引用"></a> 右值引用</h2>
-<p>右值引用是将不可修改的右值拷贝一份放到可修改区域，并为该地址取得名，是该地址的映射，所以右值引用是左值</p>
-<p>当右值引用作为函数形参时，只能匹配右值，这通常用来实现移动语义</p>
-<h2 id="万能引用"><a class="markdownIt-Anchor" href="#万能引用"></a> 万能引用</h2>
-<p>万能引用是 C++ 模板编程中的特殊引用，其既可以匹配左值，又可以匹配右值，所以称为万能引用</p>
-<p>基于引用折叠，左值会匹配为左值引用，右值会匹配为右值引用</p>
-<p>在模板内部，当需要调用其他函数并且传入万能引用形参时，需要对万能引用调用forward进行完美转发</p>
+        <h1 id="f"><a class="markdownIt-Anchor" href="#f"></a> F</h1>
+<h2 id="description"><a class="markdownIt-Anchor" href="#description"></a> Description</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1926/problem/F">https://codeforces.com/contest/1926/problem/F</a></p>
+</blockquote>
+<h2 id="solution"><a class="markdownIt-Anchor" href="#solution"></a> Solution</h2>
+<p>由于本题为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>7</mn><mo>×</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">7 \times 7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 的固定大小，可以使用枚举的方法完成</p>
+<p>继续分析可以发现，在最坏情况下最多需要去掉8个黑色格子就可以使整个grid没有X，也就是说，本题的最大搜索深度为8，此时估计枚举量为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>C</mi><mn>49</mn><mn>8</mn></msubsup></mrow><annotation encoding="application/x-tex">C^8_{49}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0622159999999998em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">4</span><span class="mord mtight">9</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span></span></span></span> 约为4e8，这显然是非常极限的</p>
+<p>由于X的特殊性，其只受对角线上的方格影响，不难发现，从(1,1)开始，将按照对角线方式移动所能到达的格子抽离出来，在这些格子上枚举不影响未抽离的格子的X存在性</p>
+<p>这时，分别枚举处理两边，单边的枚举量为 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>C</mi><mn>25</mn><mn>4</mn></msubsup></mrow><annotation encoding="application/x-tex">C^4_{25}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0622159999999998em;vertical-align:-0.24810799999999997em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span><span class="mord mtight">5</span></span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span></span></span></span> 大约为1e4，两边加起来也不过2e4，运算量大大降低。</p>
+<h1 id="g"><a class="markdownIt-Anchor" href="#g"></a> G</h1>
+<h2 id="description-2"><a class="markdownIt-Anchor" href="#description-2"></a> Description</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://codeforces.com/contest/1926/problem/G">https://codeforces.com/contest/1926/problem/G</a></p>
+</blockquote>
+<h2 id="solution-2"><a class="markdownIt-Anchor" href="#solution-2"></a> Solution</h2>
+<p>如果把P点与S点看成水泵，P点与S点的水不同，那么题目所要求的就是让水向根节点流，期间不能发生水混合的情况</p>
+<p>定义状态：假设 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">d</span><span class="mord mathnormal">p</span><span class="mopen">[</span><span class="mord mathnormal">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathnormal" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 表示在i节点处及其子节点处不会发生液体混合时，液体情况为j时，所需的最少筑墙数，j可取[0,1,2]，分别表示没有液体流过、没有S液体流过、没有P液体流过的情况。</p>
+<p>注意，当i节点为水泵节点时，认为有液体流过且只流其泵出的液体</p>
+<p>转移方程：</p>
+<ul>
+<li>C节点：$$dp[i][0]=\sum \min (dp[child][0], dp[child][1]+1, dp[child][2]+1)$$$$dp[i][1]=\sum \min (dp[child][0], dp[child][1], dp[child][2]+1)$$$$dp[i][2]=\sum \min (dp[child][0], dp[child][1]+1, dp[child][2])$$</li>
+<li>P节点：$$dp[i][0]=dp[i][2]=\infin$$$$dp[i][1]=\sum \min (dp[child][0], dp[child][1], dp[child][2]+1)$$</li>
+<li>S节点：$$dp[i][0]=dp[i][1]=\infin$$$$dp[i][2]=\sum \min (dp[child][0], dp[child][1]+1, dp[child][2])$$</li>
+</ul>
+<p>注意，没有S/P液体流过表示要么流其他液体，要么不流液体，所以在转移时，必须模糊考虑这两种情况，由于三种情况可以互相弥补未考虑的情况，所以其包含了全部情况</p>
 
     </div>
     
